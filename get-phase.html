@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('get-phase',{
         category: 'multimeter modular',
-        color: '#D8BFD8',
+        color: '#C0C0C0',
         defaults: {
             name:{ value: "" },
             mapeamento:{ value:"", type: "mapping-get-phase" },
@@ -12,9 +12,9 @@
         },
         inputs:1,
         outputs:1,
-        icon: "font-awesome/fa-bars",
-        label: function() { return this.name || "get-phase" },
-        paletteLabel: "get-phase",
+        icon: "./icons/Get Phase.svg",
+        label: function() { return this.name || "Get Phase" },
+        paletteLabel: "Get Phase",
         oneditprepare: function() {
             var ports = []
             var self = this
@@ -33,6 +33,13 @@
                 });
             })
             $("#node-input-mapeamento").val($("#node-input-mapeamento option:first").val());
+        },
+        oneditresize: function() {
+            if(!$("#red-ui-header-button-deploy").hasClass("disabled")){
+                $("#node-dialog-ok").click()
+                $("#red-ui-header-button-deploy").click()
+                $("#red-ui-deploy-dialog-confirm-deploy-deploy").click()
+            }
         },
         oneditsave: function() {
             var mytype = $("#node-config-input-port").typedInput('type');
