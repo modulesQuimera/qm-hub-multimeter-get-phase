@@ -1,9 +1,57 @@
 module.exports = function(RED) {
 
-    "use strict";
+    // "use strict";
     // var serialPool = require("../../serial-template/serial")
     var mapeamentoNode;
     
+    function multipleGetPhase(self, file, slot, currentMode){
+        for(var t=0; t<self.qtdGetPhase; t++){
+            var _compare_n = {};
+            if (self.compare_select_n[t] == "interval") {
+                _compare_n = {
+                    phase_degrees: {">=": parseFloat(self.minValue_n[t]), "<=": parseFloat(self.maxValue_n[t])}
+                };
+            }
+            if (self.compare_select_n[t] == "maxValue") {
+                _compare_n = {
+                    phase_degrees: {">=": null, "<=": parseFloat(self.maxValue_n[t])}
+                };
+            }
+            if (self.compare_select_n[t] == "minValue") {
+                _compare_n = {
+                    phase_degrees: {">=": parseFloat(self.minValue_n[t]), "<=": null}
+                };
+            }
+            // console.log("entrou")
+            var command_n={
+                type: "multimeter_modular_V1_0",
+                slot: parseInt(mapeamentoNode.slot),
+                method: "get_phase",
+                couple_channel: parseInt(self.channel_number_n[t]),
+                compare: _compare_n,
+                get_output: {},
+            }
+            if(!(slot === "begin" || slot === "end")){
+                if(currentMode == "test"){
+                    file.slots[slot].jig_test.push(command_n);
+                }
+                else{
+                    file.slots[slot].jig_error.push(command_n);
+                }
+            }
+            else{
+                if(slot === "begin"){
+                    file.slots[0].jig_test.push(command_n);
+                }
+                else{
+                    file.slots[3].jig_test.push(command_n);
+                }
+            }
+        }
+        return file;
+    }
+
+
     function getPhaseNode(config) {
         RED.nodes.createNode(this, config);
         this.mapeamento = config.mapeamento 
@@ -12,16 +60,40 @@ module.exports = function(RED) {
         // this.equalTo = config.equalTo;
         this.maxValue = config.maxValue;
         this.minValue = config.minValue;
+        
+
+        this.qtdGetPhase = config.qtdGetPhase;
+        this.channel_number_n=[]; this.compare_select_n=[]; this.maxValue_n=[]; this.minValue_n=[];
+        this.channel_number_n.push(config.channel_number1); this.compare_select_n.push(config.compare_select1); this.maxValue_n.push(config.maxValue1); this.minValue_n.push(config.minValue1);
+        this.channel_number_n.push(config.channel_number2); this.compare_select_n.push(config.compare_select2); this.maxValue_n.push(config.maxValue2); this.minValue_n.push(config.minValue2);
+        this.channel_number_n.push(config.channel_number3); this.compare_select_n.push(config.compare_select3); this.maxValue_n.push(config.maxValue3); this.minValue_n.push(config.minValue3);
+        this.channel_number_n.push(config.channel_number4); this.compare_select_n.push(config.compare_select4); this.maxValue_n.push(config.maxValue4); this.minValue_n.push(config.minValue4);
+        this.channel_number_n.push(config.channel_number5); this.compare_select_n.push(config.compare_select5); this.maxValue_n.push(config.maxValue5); this.minValue_n.push(config.minValue5);
+        this.channel_number_n.push(config.channel_number6); this.compare_select_n.push(config.compare_select6); this.maxValue_n.push(config.maxValue6); this.minValue_n.push(config.minValue6);
+        this.channel_number_n.push(config.channel_number7); this.compare_select_n.push(config.compare_select7); this.maxValue_n.push(config.maxValue7); this.minValue_n.push(config.minValue7);
+        this.channel_number_n.push(config.channel_number8); this.compare_select_n.push(config.compare_select8); this.maxValue_n.push(config.maxValue8); this.minValue_n.push(config.minValue8);
+        this.channel_number_n.push(config.channel_number9); this.compare_select_n.push(config.compare_select9); this.maxValue_n.push(config.maxValue9); this.minValue_n.push(config.minValue9);
+        this.channel_number_n.push(config.channel_number10); this.compare_select_n.push(config.compare_select10); this.maxValue_n.push(config.maxValue10); this.minValue_n.push(config.minValue10);
+        this.channel_number_n.push(config.channel_number11); this.compare_select_n.push(config.compare_select11); this.maxValue_n.push(config.maxValue11); this.minValue_n.push(config.minValue11);
+        this.channel_number_n.push(config.channel_number12); this.compare_select_n.push(config.compare_select12); this.maxValue_n.push(config.maxValue12); this.minValue_n.push(config.minValue12);
+        this.channel_number_n.push(config.channel_number13); this.compare_select_n.push(config.compare_select13); this.maxValue_n.push(config.maxValue13); this.minValue_n.push(config.minValue13);
+        this.channel_number_n.push(config.channel_number14); this.compare_select_n.push(config.compare_select14); this.maxValue_n.push(config.maxValue14); this.minValue_n.push(config.minValue14);
+        this.channel_number_n.push(config.channel_number15); this.compare_select_n.push(config.compare_select15); this.maxValue_n.push(config.maxValue15); this.minValue_n.push(config.minValue15);
+        this.channel_number_n.push(config.channel_number16); this.compare_select_n.push(config.compare_select16); this.maxValue_n.push(config.maxValue16); this.minValue_n.push(config.minValue16);
+        this.channel_number_n.push(config.channel_number17); this.compare_select_n.push(config.compare_select17); this.maxValue_n.push(config.maxValue17); this.minValue_n.push(config.minValue17);
+        this.channel_number_n.push(config.channel_number18); this.compare_select_n.push(config.compare_select18); this.maxValue_n.push(config.maxValue18); this.minValue_n.push(config.minValue18);
+        this.channel_number_n.push(config.channel_number19); this.compare_select_n.push(config.compare_select19); this.maxValue_n.push(config.maxValue19); this.minValue_n.push(config.minValue19);
+        this.channel_number_n.push(config.channel_number20); this.compare_select_n.push(config.compare_select20); this.maxValue_n.push(config.maxValue20); this.minValue_n.push(config.minValue20);
+        this.channel_number_n.push(config.channel_number21); this.compare_select_n.push(config.compare_select21); this.maxValue_n.push(config.maxValue21); this.minValue_n.push(config.minValue21);
+        this.channel_number_n.push(config.channel_number22); this.compare_select_n.push(config.compare_select22); this.maxValue_n.push(config.maxValue22); this.minValue_n.push(config.minValue22);
+        this.channel_number_n.push(config.channel_number23); this.compare_select_n.push(config.compare_select23); this.maxValue_n.push(config.maxValue23); this.minValue_n.push(config.minValue23);
+        this.channel_number_n.push(config.channel_number24); this.compare_select_n.push(config.compare_select24); this.maxValue_n.push(config.maxValue24); this.minValue_n.push(config.minValue24);
+
         var node = this
         mapeamentoNode = RED.nodes.getNode(this.mapeamento);
         
         node.on('input', function(msg, send, done) {
             var _compare = {};
-            // if (node.compare_select == "equalTo") {
-            //     _compare = {
-            //         voltage_value: {"==": (!isNaN(parseFloat(node.equalTo)))? parseFloat(node.equalTo):node.equalTo }
-            //     }
-            // }
             if (node.compare_select == "interval") {
                 _compare = {
                     phase_degrees: {">=": parseFloat(node.minValue), "<=": parseFloat(node.maxValue)}
@@ -54,19 +126,22 @@ module.exports = function(RED) {
             if(!(slot === "begin" || slot === "end")){
                 if(currentMode == "test"){
                     file.slots[slot].jig_test.push(command);
+                    file = multipleGetPhase(node, file, slot, currentMode);
+                    console.log("jeb o bireuleit")
                 }
                 else{
                     file.slots[slot].jig_error.push(command);
+                    file = multipleGetPhase(node, file, slot, currentMode);
                 }
             }
             else{
                 if(slot === "begin"){
                     file.slots[0].jig_test.push(command);
-                    // file.begin.push(command);
+                    file = multipleGetPhase(node, file, slot, currentMode);
                 }
                 else{
                     file.slots[3].jig_test.push(command);
-                    // file.end.push(command);
+                    file = multipleGetPhase(node, file, slot, currentMode);
                 }
             }
             globalContext.set("exportFile", file);
@@ -76,70 +151,4 @@ module.exports = function(RED) {
         });
     }
     RED.nodes.registerType("get-phase", getPhaseNode);
-
-    // RED.httpAdmin.get("/getPhase",function(req,res) {
-    //     console.log(mapeamentoNode)
-    //     if(mapeamentoNode){
-    //         res.json([
-    //             {value:mapeamentoNode.valuePort1, label: "A1 | IAPW - " + mapeamentoNode.labelPort1, hasValue:false},
-    //             {value:mapeamentoNode.valuePort2, label: "A2 | IAPW - " + mapeamentoNode.labelPort2, hasValue:false},
-    //             {value:mapeamentoNode.valuePort3, label: "A3 | IAPW - " + mapeamentoNode.labelPort3, hasValue:false},
-    //             {value:mapeamentoNode.valuePort4, label: "A4 | IAPW - " + mapeamentoNode.labelPort4, hasValue:false},
-    //             {value:mapeamentoNode.valuePort5, label: "A5 | IAPW - " + mapeamentoNode.labelPort5, hasValue:false},
-    //             {value:mapeamentoNode.valuePort6, label: "A6 | IAPW - " + mapeamentoNode.labelPort6, hasValue:false},
-    //             {value:mapeamentoNode.valuePort7, label: "A7 | IAPW - " + mapeamentoNode.labelPort7, hasValue:false},
-    //             {value:mapeamentoNode.valuePort8, label: "A8 | IAPW - " + mapeamentoNode.labelPort8, hasValue:false},
-    //             {value:mapeamentoNode.valuePort9, label: "A9 | IAPW - " + mapeamentoNode.labelPort9, hasValue:false},
-    //             {value:mapeamentoNode.valuePort10, label: "A10 | IAPW - " + mapeamentoNode.labelPort10, hasValue:false},
-    //             {value:mapeamentoNode.valuePort11, label: "A11 | IAPW - " + mapeamentoNode.labelPort11, hasValue:false},
-    //             {value:mapeamentoNode.valuePort12, label: "APW | IAPW - " + mapeamentoNode.labelPort12, hasValue:false},
-    //             {value:mapeamentoNode.valuePort13, label: "AMX | IAPW - " + mapeamentoNode.labelPort13, hasValue:false},
-    //             {value:mapeamentoNode.valuePort14, label: "B1 | IBPW - " + mapeamentoNode.labelPort14, hasValue:false},
-    //             {value:mapeamentoNode.valuePort15, label: "B2 | IBPW - " + mapeamentoNode.labelPort15, hasValue:false},
-    //             {value:mapeamentoNode.valuePort16, label: "B3 | IBPW - " + mapeamentoNode.labelPort16, hasValue:false},
-    //             {value:mapeamentoNode.valuePort17, label: "B4 | IBPW - " + mapeamentoNode.labelPort17, hasValue:false},
-    //             {value:mapeamentoNode.valuePort18, label: "B5 | IBPW - " + mapeamentoNode.labelPort18, hasValue:false},
-    //             {value:mapeamentoNode.valuePort19, label: "B6 | IBPW - " + mapeamentoNode.labelPort19, hasValue:false},
-    //             {value:mapeamentoNode.valuePort20, label: "B7 | IBPW - " + mapeamentoNode.labelPort20, hasValue:false},
-    //             {value:mapeamentoNode.valuePort21, label: "B8 | IBPW - " + mapeamentoNode.labelPort21, hasValue:false},
-    //             {value:mapeamentoNode.valuePort22, label: "B9 | IBPW - " + mapeamentoNode.labelPort22, hasValue:false},
-    //             {value:mapeamentoNode.valuePort23, label: "B10 | IBPW - " + mapeamentoNode.labelPort23, hasValue:false},
-    //             {value:mapeamentoNode.valuePort24, label: "B11 | IBPW - " + mapeamentoNode.labelPort24, hasValue:false},
-    //             {value:mapeamentoNode.valuePort25, label: "BPW | IBPW - " + mapeamentoNode.labelPort25, hasValue:false},
-    //             {value:mapeamentoNode.valuePort26, label: "BMX | IBPW - " + mapeamentoNode.labelPort26, hasValue:false},
-    //             {value:mapeamentoNode.valuePort27, label: "CPW | ICPW - " + mapeamentoNode.labelPort27, hasValue:false},
-    //         ])
-    //     }
-    //     else{
-    //         res.json([
-    //             {label:"A1 | IAPWA1 - ", value: "0", hasValue:false},
-    //             {label:"A2 | IAPW - ", value: "1", hasValue:false},
-    //             {label:"A3 | IAPW - ", value: "2", hasValue:false},
-    //             {label:"A4 | IAPW - ", value: "3", hasValue:false},
-    //             {label:"A5 | IAPW - ", value: "4", hasValue:false},
-    //             {label:"A6 | IAPW - ", value: "5", hasValue:false},
-    //             {label:"A7 | IAPW - ", value: "6", hasValue:false},
-    //             {label:"A8 | IAPW - ", value: "7", hasValue:false},
-    //             {label:"A9 | IAPW - ", value: "8", hasValue:false},
-    //             {label:"A10 | IAPW - ", value: "9", hasValue:false},
-    //             {label:"A11 | IAPW - ", value: "10", hasValue:false},
-    //             {label:"APW | IAPW - ", value: "11", hasValue:false},
-    //             {label:"AMX | IAPW - ", value: "12", hasValue:false},
-    //             {label:"B1 | IBPW - ", value: "13", hasValue:false},
-    //             {label:"B2 | IBPW - ", value: "14", hasValue:false},
-    //             {label:"B3 | IBPW - ", value: "15", hasValue:false},
-    //             {label:"B4 | IBPW - ", value: "16", hasValue:false},
-    //             {label:"B5 | IBPW - ", value: "17", hasValue:false},
-    //             {label:"B6 | IBPW - ", value: "18", hasValue:false},
-    //             {label:"B7 | IBPW - ", value: "19", hasValue:false},
-    //             {label:"B8 | IBPW - ", value: "20", hasValue:false},
-    //             {label:"B9 | IBPW - ", value: "21", hasValue:false},
-    //             {label:"B10 | IBPW - ", value: "22", hasValue:false},
-    //             {label:"B11 | IBPW - ", value: "23", hasValue:false},
-    //             {label:"BPW | IBPW - ", value: "24", hasValue:false},
-    //             {label:"BMX | IBPW - ", value: "25", hasValue:false},
-    //             {label:"CPW | ICPW - ", value: "26", hasValue:false},
-    //         ])
-    //     }
-    // });
 }
