@@ -22,7 +22,6 @@ module.exports = function(RED) {
                     phase_degrees: {">=": parseFloat(self.minValue_n[t]), "<=": null}
                 };
             }
-            // console.log("entrou")
             var command_n={
                 type: "multimeter_modular_V1_0",
                 slot: parseInt(mapeamentoNode.slot),
@@ -127,7 +126,6 @@ module.exports = function(RED) {
                 if(currentMode == "test"){
                     file.slots[slot].jig_test.push(command);
                     file = multipleGetPhase(node, file, slot, currentMode);
-                    console.log("jeb o bireuleit")
                 }
                 else{
                     file.slots[slot].jig_error.push(command);
@@ -146,7 +144,6 @@ module.exports = function(RED) {
             }
             globalContext.set("exportFile", file);
             node.status({fill:"green", shape:"dot", text:"done"}); // seta o status pra waiting
-            console.log(command)
             send(msg)
         });
     }

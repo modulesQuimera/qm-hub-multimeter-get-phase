@@ -1,6 +1,6 @@
 {
   "name": "qm-multimeter-get-phase",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "multimeter get-phase module - Node-Red",
   "main": "get-phase.js",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modulesQuimera/qm-hub-multimeter-get-phase.git"
+    "url": "git+https://github.com/modulesQuimera/qm-multimeter-get-phase.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/modulesQuimera/qm-hub-multimeter-get-phase/issues"
+    "url": "https://github.com/modulesQuimera/qm-multimeter-get-phase/issues"
   },
-  "homepage": "https://github.com/modulesQuimera/qm-hub-multimeter-get-phase#readme",
+  "homepage": "https://github.com/modulesQuimera/qm-multimeter-get-phase#readme",
   "node-red": {
     "nodes": {
      "get-phase": "get-phase.js"
